@@ -61,6 +61,20 @@ const lorentz = (position: Vector3): Vector3 => {
   );
 };
 
+const rossler = (position: Vector3): Vector3 => {
+  const a = 0.2;
+  const b = 0.2;
+  const c = 5.7;
+  const { x, y, z } = position
+    .clone()
+    .multiplyScalar(40)
+    .add(new Vector3(0, 0, 10));
+  const dxdt = -(y + z);
+  const dydt = x + a * y;
+  const dzdt = b + z * (x - c);
+  return position.add(new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.0005));
+};
+
 const thomas = (position: Vector3): Vector3 => {
   const b = 0.208186;
   const { x, y, z } = position.clone().multiplyScalar(10);
@@ -71,5 +85,5 @@ const thomas = (position: Vector3): Vector3 => {
 };
 
 export const getAttractor = (): ((p: Vector3) => Vector3) => {
-  return randomChoice([aizawa, chen, dadras, lorentz, thomas]);
+  return randomChoice([aizawa, chen, dadras, lorentz, rossler, thomas]);
 };
