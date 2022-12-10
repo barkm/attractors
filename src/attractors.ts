@@ -1,12 +1,6 @@
 import { Vector3 } from "three";
 import { randomChoice } from "./utils";
 
-export const forwardEuler = (
-  position: THREE.Vector3,
-  velocity: (p: THREE.Vector3) => THREE.Vector3,
-  delta: number
-): THREE.Vector3 => position.addScaledVector(velocity(position), delta);
-
 const aizawa = (position: Vector3): Vector3 => {
   const a = 0.95;
   const b = 0.7;
@@ -22,7 +16,9 @@ const aizawa = (position: Vector3): Vector3 => {
   const dydt = d * x + (z - b) * y;
   const dzdt =
     c + a * z - z ** 3 / 3 - (x ** 2 + y ** 2) * (1 + e * z) + f * z * x ** 3;
-  return new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.2);
+  return position.add(
+    new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.005 * 0.2)
+  );
 };
 
 const lorentz = (position: Vector3): Vector3 => {
@@ -36,9 +32,20 @@ const lorentz = (position: Vector3): Vector3 => {
   const dxdt = sigma * (y - x);
   const dydt = x * (rho - z) - y;
   const dzdt = x * y - beta * z;
-  return new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.005);
+  return position.add(
+    new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.005 * 0.005)
+  );
+};
+
+const thomas = (position: Vector3): Vector3 => {
+  const b = 0.208186;
+  const { x, y, z } = position.clone().multiplyScalar(10);
+  const dxdt = Math.sin(y) - b * x;
+  const dydt = Math.sin(z) - b * y;
+  const dzdt = Math.sin(x) - b * z;
+  return position.add(new Vector3(dxdt, dydt, dzdt).multiplyScalar(0.01));
 };
 
 export const getAttractor = (): ((p: Vector3) => Vector3) => {
-  return randomChoice([lorentz, aizawa]);
+  return randomChoice([aizawa, lorentz, thomas]);
 };

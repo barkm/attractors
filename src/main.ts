@@ -1,6 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
-import { forwardEuler, getAttractor } from "./attractors";
+import { getAttractor } from "./attractors";
 import { createLine, updateLine } from "./line";
 import { range } from "./utils";
 import { setupScene } from "./scene";
@@ -22,7 +22,7 @@ const forwardEulerLine = (line: THREE.Line) => {
     positions.getY(lineLength - 1),
     positions.getZ(lineLength - 1)
   );
-  updateLine(line, forwardEuler(position, attractor, 0.005));
+  updateLine(line, attractor(position));
   positions.needsUpdate = true;
 };
 
