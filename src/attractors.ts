@@ -131,6 +131,21 @@ const lorentz = (): Attractor => ({
   },
 });
 
+const rabinovichFabrikant = (): Attractor => ({
+  scale: 10,
+  translation: new Vector3(0, 0, 3),
+  delta: 0.0002,
+  velocity: (position: Vector3): Vector3 => {
+    const a = 0.14;
+    const c = 0.1;
+    let { x, y, z } = position;
+    const dxdt = y * (z - 1 + x ** 2) + c * x;
+    const dydt = x * (3 * z + 1 - x ** 2) + c * y;
+    const dzdt = -2 * z * (a + x * y);
+    return new Vector3(dxdt, dydt, dzdt);
+  },
+});
+
 const rossler = (): Attractor => ({
   scale: 40,
   translation: new Vector3(0, 0, 10),
@@ -203,6 +218,7 @@ export const getAttractor = (): ((p: Vector3) => Vector3) => {
     fourWing,
     halvorsen,
     lorentz,
+    rabinovichFabrikant,
     rossler,
     scroll,
     sprott,
