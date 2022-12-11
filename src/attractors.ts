@@ -13,8 +13,22 @@ const integrate = (position: Vector3, attractor: Attractor): Vector3 => {
     .clone()
     .multiplyScalar(attractor.scale)
     .add(attractor.translation);
-  const v = attractor.velocity(transformedPosition);
-  return position.clone().addScaledVector(v, attractor.delta);
+  const k1 = attractor.velocity(transformedPosition);
+  const k2 = attractor.velocity(
+    transformedPosition.clone().addScaledVector(k1, attractor.delta / 2)
+  );
+  const k3 = attractor.velocity(
+    transformedPosition.clone().addScaledVector(k2, attractor.delta / 2)
+  );
+  const k4 = attractor.velocity(
+    transformedPosition.clone().addScaledVector(k3, attractor.delta)
+  );
+  return position
+    .clone()
+    .addScaledVector(k1, attractor.delta / 6)
+    .addScaledVector(k2, attractor.delta / 6)
+    .addScaledVector(k3, attractor.delta / 6)
+    .addScaledVector(k4, attractor.delta / 6);
 };
 
 const aizawa = (): Attractor => ({
