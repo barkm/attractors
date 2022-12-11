@@ -14,7 +14,7 @@ export const setupScene = (): { scene: THREE.Scene; update: () => void } => {
     75,
     window.innerWidth / window.innerHeight,
     0.1,
-    10
+    100
   );
   camera.rotateX(Math.PI / 2);
   camera.position.y = -1.5;
@@ -23,9 +23,6 @@ export const setupScene = (): { scene: THREE.Scene; update: () => void } => {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.autoRotate = true;
   controls.enablePan = false;
-  controls.enableZoom = false;
-  controls.minPolarAngle = Math.PI / 2;
-  controls.maxPolarAngle = Math.PI / 2;
   return {
     scene: scene,
     update: () => {
