@@ -4,7 +4,7 @@ import { range } from "./utils";
 export const createLine = (lineLength: number): THREE.Line => {
   const colors = new THREE.BufferAttribute(
     Float32Array.from(
-      range(lineLength).flatMap((i) => [0, 0, 0, i / lineLength])
+      range(lineLength).flatMap((i) => [0, 0, 0, (0.75 * i) / lineLength])
     ),
     4
   );
@@ -33,7 +33,10 @@ const shiftLeft = (collection: Float32Array, values: number[]) => {
   }
 };
 
-export const updateLine = (line: THREE.Line, position: THREE.Vector3) => {
+export const updateLinePosition = (
+  line: THREE.Line,
+  position: THREE.Vector3
+) => {
   const { x, y, z } = position;
   shiftLeft(line.geometry.attributes.position.array as Float32Array, [x, y, z]);
 };
