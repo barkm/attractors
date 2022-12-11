@@ -21,8 +21,20 @@ export const setupScene = (): { scene: THREE.Scene; update: () => void } => {
   camera.up.set(0, 0, 1);
 
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.autoRotate = true;
   controls.enablePan = false;
+  controls.autoRotate = true;
+  let autoRotateTimeout: number | null = null;
+  controls.addEventListener("start", () => {
+    if (autoRotateTimeout) {
+      clearTimeout(autoRotateTimeout);
+    }
+    controls.autoRotate = false;
+  });
+  controls.addEventListener("end", () => {
+    autoRotateTimeout = setTimeout(function () {
+      controls.autoRotate = true;
+    }, 5000);
+  });
   return {
     scene: scene,
     update: () => {
