@@ -5,12 +5,12 @@ import { createLine, updateLinePosition } from "./line";
 import { range } from "./utils";
 import { setupScene } from "./scene";
 
-const numParticles = 500;
+const numLines = 500;
 const lineLength = 100;
 
 const { scene, update } = setupScene();
 
-const lines = range(numParticles).map(() => createLine(lineLength));
+const lines = range(numLines).map(() => createLine(lineLength));
 lines.forEach((l) => scene.add(l));
 
 const attractor = getAttractor();
