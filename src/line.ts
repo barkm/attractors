@@ -19,6 +19,7 @@ export const createLine = (lineLength: number): THREE.Line => {
   const material = new THREE.LineBasicMaterial({
     vertexColors: true,
     transparent: true,
+    depthTest: false,
   });
   return new THREE.Line(geometry, material);
 };

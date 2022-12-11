@@ -17,7 +17,7 @@ export const setupScene = (): { scene: THREE.Scene; update: () => void } => {
     10
   );
   camera.rotateX(Math.PI / 2);
-  camera.position.y = -1;
+  camera.position.y = -1.5;
   camera.up.set(0, 0, 1);
 
   const controls = new OrbitControls(camera, renderer.domElement);
