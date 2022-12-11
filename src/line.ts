@@ -39,4 +39,6 @@ export const updateLinePosition = (
 ) => {
   const { x, y, z } = position;
   shiftLeft(line.geometry.attributes.position.array as Float32Array, [x, y, z]);
+  line.geometry.computeBoundingBox();
+  line.geometry.computeBoundingSphere();
 };

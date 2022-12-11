@@ -13,7 +13,7 @@ export const setupScene = (): { scene: THREE.Scene; update: () => void } => {
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
-    0.1,
+    0.00001,
     100
   );
   camera.rotateX(Math.PI / 2);
