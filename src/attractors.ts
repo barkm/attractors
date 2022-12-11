@@ -150,6 +150,21 @@ const scroll = (): Attractor => ({
   },
 });
 
+const sprott = (): Attractor => ({
+  scale: 4,
+  translation: new Vector3(0.75, 0, 0),
+  delta: 0.005,
+  velocity: (position: Vector3): Vector3 => {
+    const a = 2.07;
+    const b = 1.79;
+    let { x, y, z } = position;
+    const dxdt = y + a * x * y + x * z;
+    const dydt = 1 - b * x ** 2 + y * z;
+    const dzdt = x - x ** 2 - y ** 2;
+    return new Vector3(dxdt, dydt, dzdt);
+  },
+});
+
 const thomas = (): Attractor => ({
   scale: 10,
   translation: new Vector3(0, 0, 0),
@@ -173,6 +188,7 @@ export const getAttractor = (): ((p: Vector3) => Vector3) => {
     lorentz,
     rossler,
     scroll,
+    sprott,
     thomas,
   ])();
   return (p: Vector3) => integrate(p, attractor);
