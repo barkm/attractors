@@ -85,6 +85,22 @@ const dadras = (): Attractor => ({
   },
 });
 
+const fourWing = (): Attractor => ({
+  scale: 8,
+  translation: new Vector3(0, 0, 0),
+  delta: 0.005,
+  velocity: (position: Vector3): Vector3 => {
+    const a = 0.2;
+    const b = 0.01;
+    const c = -0.4;
+    const { x, y, z } = position;
+    const dxdt = a * x + y * z;
+    const dydt = b * x + c * y - x * z;
+    const dzdt = -z - x * y;
+    return new Vector3(dxdt, dydt, dzdt);
+  },
+});
+
 const halvorsen = (): Attractor => ({
   scale: 25,
   translation: new Vector3(-4, -4, -2),
@@ -184,6 +200,7 @@ export const getAttractor = (): ((p: Vector3) => Vector3) => {
     aizawa,
     chen,
     dadras,
+    fourWing,
     halvorsen,
     lorentz,
     rossler,

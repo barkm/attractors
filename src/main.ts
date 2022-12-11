@@ -30,7 +30,7 @@ const updateLine = (line: THREE.Line, opacity: number) => {
 const updateLines = (opacity: number) =>
   lines.forEach((l) => updateLine(l, opacity));
 
-const numBurnInSteps = 500;
+const numBurnInSteps = 1000;
 range(numBurnInSteps).forEach(() => updateLines(0));
 
 const numFadeInSteps = 100;
